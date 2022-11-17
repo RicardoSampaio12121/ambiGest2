@@ -6,5 +6,8 @@ var authenticationController = require('../controllers/authenticationController'
 router.route('/login').post(authenticationController.login)
 router.route('/logout').post(authenticationController.logout)
 router.route('/signup').post(authenticationController.signup)
-router.route('/refresh_token').get(authenticationController.refresh_token)
+router.route('/refresh_token').post(authenticationController.refresh_token)
 router.route('/recover').post(authenticationController.recover)
+
+
+module.exports=router

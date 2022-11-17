@@ -5,10 +5,12 @@ const User = mongoose.model('User')
 
 
 exports.read = async(req, res) => {
-     const { username } = "RicardoSampaio"
+     const { username } = req.username
 
      // Get the user from mongodb
-     const user = await User.findOne({username: "RicardoSampaio"}).lean()
+     const user = await User.findOne({username: username}).lean()
+
+     if(!user) return res.status(500).json({auth: false, message: 'There is no user with those credentials.'})
 
      // Return user as json
      res.status(200).json(user)

@@ -1,27 +1,28 @@
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: "hotmail",
+  auth: {
+      user: "ricardo_cs@outlook.pt",
+      pass: "jesusofsuburbiaGD1"
+  }
+});
+
 class EmailClient {
-    constructor(email, verificationCode){
-        this.email = email;
-        this.verificationCode = verificationCode
-        this.nodeMailer = require('nodemailer')
+    
+  constructor(email, code){
+    this.email = email 
+    this.code = code
 
-        this.transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth:{
-                user: 'ambigestIPCA@gmail.pt',
-                pass: 'thethreedeadlyhallows9'
-            }
-        });
-
-        
     }
 
+    //TODO: Fazer com que isto seja assincrono
     sendVerificationEmail(){
-
         var mailOptions = {
-            from: 'ambigestIPCA@gmail.pt',
-            to: 'ricardo_cs@outlook.pt',
+            from: 'ricardo_cs@outlook.pt',
+            to: this.email,
             subject: 'Your authorization code!',
-            text: 'Your code is!' + this.verificationCode
+            text: 'Your code is: ' + this.code
           };
 
         transporter.sendMail(mailOptions, function(error, info){
@@ -32,7 +33,6 @@ class EmailClient {
             }
           }); 
     }
-    
 }
 
 module.exports = {EmailClient}
