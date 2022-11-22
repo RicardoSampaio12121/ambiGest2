@@ -1,4 +1,4 @@
-require('../models/UserModel')
+require('../entities/CredentialsEntity')
 const { getClient, query, queryParams } = require("../external/Postgresql/postgresqlClient")
 exports.checkCredentials = async(req, res) => {
     
