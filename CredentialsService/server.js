@@ -1,20 +1,19 @@
-var express = require('express'), aplicacao = express, porta = 5000
- const path = require('path')
- const bodyParser = require('body-parser')
- //const mongoose = require('mongoose')
-// const jwt = require('jsonwebtoken')
+'use strict';
 
-const { application } = require('express');
-const router = require('./src/routes/credentialsRoutes');
+const express = require('express')
+const path = require('path')
+const bodyParser = require('body-parser')
+require('dotenv').config();
 
- const app=express()
+const app = express()
 
- app.use(bodyParser.urlencoded({extended:false}))
- app.use(bodyParser.json())
 
- app.use("/api", require('./src/routes/credentialsRoutes'));
+app.use('/', express.static(path.join(__dirname, 'static')))
+app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.json())
 
- let port = 8886
- app.listen(port, () => {
-     console.log('Server at ' + port)
- })
+app.use("/api", require("./src/controllers/routes/credentialsRoutes"));
+
+app.listen(8887, (req, res) => {
+    console.log('Listening on port: ' + 8887)
+})

@@ -1,4 +1,4 @@
-class CredentialsEntity {
+exports.CredentialsEntity = class CredentialsEntity {
     constructor(email, password, verified) {
         this.email = this.isValidEmail(email) ? email : ""
         this.password = this.isValidPassword(password) ? password : ""

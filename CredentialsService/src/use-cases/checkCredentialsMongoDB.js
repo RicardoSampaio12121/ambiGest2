@@ -1,35 +1,38 @@
-const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken');
 
-const CredentialsDB = mongoose.model('Creds');
+const JWT_SECRET = process.env.JWT_SECRET
 
-const JWT_SECRET=process.env.JWT_SECRET; 
 
-exports.checkCredentialsPersistence = async(creds) =>{
-    const {email, password} = creds
+const { getClient, query, queryParams } = require("../framework/db/Postgresql/client")
 
-    const storedCreds = await CredentialsDB.findOne({email}).lean()
-    if(!storedCreds) return ({status: '500', error: 'User not found'})
+console.log("Antes de entrar na função checkCredentialsPersistence");
 
-    if(storedCreds.password == password){
-        try{
+exports.checkCredentialsPersistence = async(email, password) =>{
+    const emailll = email
+    const passworddd = password
+    // getClient((errClient, client) => {
+    //     queryParams('INSERT INTO pulic.users (email, password, verifies) VALUES ($1, $2, $3);', [email, password, false], (err) => {
+    //         client.end();
+    //     }, client);
+    // });
 
-            const token = jwt.sign({
-                id: storedCreds._id,
-                email: storedCreds.email
-            },
-                JWT_SECRET,
-                {
-                    expiresIn: 86400
-                }
-            )
+    console.log(JWT_SECRET)
 
-            return({status:'200', data: token})
+    try{
+        const token = jwt.sign({
+            id: 223,
+            email: emailll
+        },
+            JWT_SECRET,
+            {
+                expiresIn: 86400
+            }
+        )
 
-        }catch(error){
-            console.log(error)
-            return ({status: '500', error: error})
-        }
+        return({status:'200', data: token})
+
+    }catch(error){
+        console.log(error)
+        return ({status: '500', error: error})
     }
-
 }

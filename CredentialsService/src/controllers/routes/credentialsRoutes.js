@@ -1,18 +1,32 @@
 const router = require('express').Router()
 
 const credentialsIterator = require("../../use-cases/credentialsInteractorMongoDB");
-const checkCredentialsPersistence = require("../../use-cases/checkCredentialsMongoDB")
+const checkCredentialsPersistence = require("../../use-cases/checkCredentialsMongoDB");
+const addCredentialsPersistence = require("../../use-cases/addCredentialsPersistencePSQL");
 
 router.route('/checkCreds')
     .post(async (req, res) => {
         const {email, password} = req.body;
         try{
-            
-            const creds = await credentialsIterator.checkCredentialsInteractor({checkCredentialsPersistence}, {email, password})
+            const creds = await credentialsIterator.checkCredentialsInteractor(checkCredentialsPersistence, {email, password})
             res.json(creds);
         }catch(error){
             throw error;
             //return res.status(500).send('Internal server error');
+        }
+    })
+
+router.route('/addCredentials')
+    .post(async (req, res) => {
+        const {email, password} = req.body;
+        try{
+            const creds = await credentialsIterator.addCredentialsIterator(addCredentialsPersistence, {email, password})
+
+            console.log(creds);
+
+            return res.json(creds);
+        }catch(error){
+            throw error;
         }
     })
 

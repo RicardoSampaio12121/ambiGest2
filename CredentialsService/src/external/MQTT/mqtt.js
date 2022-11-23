@@ -10,6 +10,7 @@ client.on("message", function(topic, message){
 
     switch(split[1]){
         case 'checkCredentials': 
+            
             break;
     }
 })
