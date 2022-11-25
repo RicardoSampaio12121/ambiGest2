@@ -35,3 +35,12 @@ exports.updatePassword = async ({ updatePasswordPersistence }, {email, newPasswo
         throw error;
     }
 }
+
+exports.updateVerifyAccount = async ({ updateVerifyAccountPersistence }, {email, code}) => {
+    try{
+        const output = await updateVerifyAccountPersistence(email, code);
+        return output;
+    }catch(error){
+        throw error;
+    }
+}

@@ -4,6 +4,8 @@ const credentialsIterator = require("../../use-cases/credentialsInteractorMongoD
 const checkCredentialsPersistence = require("../../use-cases/checkCredentialsMongoDB");
 const addCredentialsPersistence = require("../../use-cases/addCredentialsPersistencePSQL");
 const updatePasswordPersistence = require("../../use-cases/updatePasswordPersistencePSQL");
+const deleteCredentialsPersistence = require("../../use-cases/deleteCredentialsPersistencePSQL");
+const updateVerifyAccountPersistence = require("../../use-cases/updateVerifyAccountPersistencePSQL");
 
 router.route('/checkCreds')
     .post(async (req, res) => {
@@ -46,16 +48,30 @@ router.route('/updatePassword')
         }
     })
 
+//TODO: Verificar o token
 router.route('/deleteCredentials')
     .delete(async (req, res) => {
         const {email} = req.body;
+
+        try{
+            var response = await credentialsIterator.deleteCredentials( deleteCredentialsPersistence, {email} )
+            return res.json(response);
+        }catch(error){
+            throw error;
+        }
     })
 
+//TODO: Verificar o token
+router.route('/updateVerifyAccount')
+    .put(async (req, res) => {
+        const { email, code } = req.body;
 
-
-
-// router.route('/updatePassword').put(credentialsController.updatePassword)
-// router.route('/deleteUserRecords').delete(credentialsController.deleteUserRecords)
-// router.route('/addUserCredentials').post(credentialsController.addCredentials)
+        try{
+            var response = await credentialsIterator.updateVerifyAccount( updateVerifyAccountPersistence, {email, code} )
+            return res.json(response);
+        }catch(error){
+            throw error;
+        }
+    })
 
 module.exports=router
