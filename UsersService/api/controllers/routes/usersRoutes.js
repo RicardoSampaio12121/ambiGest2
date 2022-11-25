@@ -1,6 +1,7 @@
 const router  = require('express').Router()
 
 const usersIterator = require("../../use-cases/usersIteratorMongoDB");
+const createUserPersistence = require("../../use-cases/createUserPersistenceMongoDB");
 
 router.route('/createUser')
     .post(async (req, res) => {
