@@ -20,11 +20,18 @@ exports.checkCredentialsInteractor = async({ checkCredentialsPersistence }, {ema
 exports.addCredentialsIterator = async({ addCredentialsPersistence }, {email, password}) => {
     try{
         const output = await addCredentialsPersistence(email, password);
-        console.log("Aquiiii: " + output)
-
         return output;
     }
     catch(error){
+        throw error;
+    }
+}
+
+exports.updatePassword = async ({ updatePasswordPersistence }, {email, newPassword }) => {
+    try{
+        const output = await updatePasswordPersistence(email, newPassword);
+        return output;
+    }catch(error){
         throw error;
     }
 }

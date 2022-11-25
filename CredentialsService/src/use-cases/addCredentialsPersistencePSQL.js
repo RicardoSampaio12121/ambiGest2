@@ -25,5 +25,4 @@ exports.addCredentialsPersistence = async(email, password) => {
              return a
          }, client)
      })
-
 }
