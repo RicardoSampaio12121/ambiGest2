@@ -5,7 +5,6 @@ const JWT_SECRET = process.env.JWT_SECRET
 
 const { getClient, query, queryParams } = require("../framework/db/Postgresql/client")
 
-console.log("Antes de entrar na função checkCredentialsPersistence");
 
 exports.checkCredentialsPersistence = async(email, password) =>{
     const emailll = email
