@@ -4,6 +4,8 @@ const usersIterator = require("../../use-cases/usersIteratorMongoDB");
 const createUserPersistence = require("../../use-cases/createUserPersistenceMongoDB");
 const updateUserPersistence = require("../../use-cases/updateUserPersistenceMongoDB");
 const deleteUserPersistence = require("../../use-cases/deleteUserPersistenceMongoDB");
+const getAllUsersPersistence = require("../../use-cases/getAllUsersPersistenceMongoDB");
+const getSingleUserPersistence = require("../../use-cases/getSingleUserPersistenceMongoDB");
 
 router.route('/createUser')
     .post(async (req, res) => {
@@ -36,7 +38,6 @@ router.route('/updateEmail')
 
 router.route('/deleteUser')
     .delete(async (req, res) => {
-
         const {email} = req.body;
 
         try{
@@ -49,12 +50,24 @@ router.route('/deleteUser')
 
 router.route('/getUser/:email')
     .get(async (req, res) => {
-        
+        var email = req.params.email
+
+        try{
+            const output = await usersIterator.getSingleUserIterator(getSingleUserPersistence, {email})
+            res.json(output);
+        }catch(error){
+            throw error;
+        }
     })
 
 router.route('/getAll')
     .get(async (req, res) => {
-
+        try{
+            const output = await usersIterator.getAllUsersIterator(getAllUsersPersistence);
+            res.json(output);
+        }catch(error){
+            throw error;
+        }
     })
 
 module.exports = router;
