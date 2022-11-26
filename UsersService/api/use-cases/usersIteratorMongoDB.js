@@ -34,6 +34,15 @@ exports.updateUserIterator = async ({ updateUserPersistence }, { name, surname, 
     }
 }
 
+exports.updateEmailIterator = async ({ updateEmailPersistence }, { currentEmail, newEmail }) => {
+    try {
+        var output = await updateEmailIterator(currentEmail, newEmail);
+        return output;
+    } catch (error) {
+        throw error;
+    }
+}
+
 exports.deleteUserIterator = async ({ deleteUserPersistence }, { email }) => {
     try {
         //TODO: Check if email is valid or not

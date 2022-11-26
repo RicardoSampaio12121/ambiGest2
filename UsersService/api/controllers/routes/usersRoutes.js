@@ -3,6 +3,7 @@ const router = require('express').Router()
 const usersIterator = require("../../use-cases/usersIteratorMongoDB");
 const createUserPersistence = require("../../use-cases/createUserPersistenceMongoDB");
 const updateUserPersistence = require("../../use-cases/updateUserPersistenceMongoDB");
+const updateEmailPersistence = require("../../use-cases/updateEmailPersistenceMongoDB");
 const deleteUserPersistence = require("../../use-cases/deleteUserPersistenceMongoDB");
 const getAllUsersPersistence = require("../../use-cases/getAllUsersPersistenceMongoDB");
 const getSingleUserPersistence = require("../../use-cases/getSingleUserPersistenceMongoDB");
@@ -33,7 +34,14 @@ router.route('/updateUser')
 
 router.route('/updateEmail')
     .put(async (req, res) => {
+        const {currentEmail, newEmail} = req.body;
 
+        try{
+            const output = await usersIterator.updateEmailIterator(updateEmailPersistence, {currentEmail, newEmail})
+            res.json(output);
+        }catch(error){
+            throw error;
+        }
     })
 
 router.route('/deleteUser')
