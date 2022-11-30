@@ -1,0 +1,9 @@
+services:
+  - name: getUsers
+    url: http://localhost:8887/api/getUser
+  - name: delete
+    url: http://localhost:8887/api/delete
+  - name: newUser
+    url: http://localhost:8887/api/newUser
+  - name: google
+    url: http://google.pt
