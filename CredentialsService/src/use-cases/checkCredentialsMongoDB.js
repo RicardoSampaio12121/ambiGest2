@@ -1,25 +1,28 @@
 const jwt = require('jsonwebtoken');
+const client = require('../framework/db/Postgresql/client');
 
 const JWT_SECRET = process.env.JWT_SECRET
 
 
 const { getClient, query, queryParams } = require("../framework/db/Postgresql/client")
 
-
-exports.checkCredentialsPersistence = async(email, password) =>{
+exports.checkCredentialsPersistence = async (email, password) => {
     const emailll = email
     const passworddd = password
-    // getClient((errClient, client) => {
-    //     queryParams('INSERT INTO pulic.users (email, password, verifies) VALUES ($1, $2, $3);', [email, password, false], (err) => {
-    //         client.end();
-    //     }, client);
-    // });
 
-    console.log(JWT_SECRET)
+    getClient((errClient, client) => {
+        queryParams('SELECT * FROM public.users WHERE email = $1 AND password = $2;', [email, password], (err, res) => {
+            //Resolver problema aqui, provavelmente tem que ser assincrono e esperar sei lá
+            //if (res.rows[0].verified == false) return { status: '500', error: 'User not verified' }
 
-    try{
+            if (err) return { status: '500', error: 'No user with those credentials.' }
+
+            client.end();
+        }, client);
+    });
+
+    try {
         const token = jwt.sign({
-            id: 223,
             email: emailll
         },
             JWT_SECRET,
@@ -28,10 +31,9 @@ exports.checkCredentialsPersistence = async(email, password) =>{
             }
         )
 
-        return({status:'200', data: token})
+        return { status: '200', data: token }
 
-    }catch(error){
-        console.log(error)
-        return ({status: '500', error: error})
+    } catch (error) {
+        return { status: '500', error: error }
     }
 }

@@ -12,7 +12,6 @@ exports.createUserIterator = async ({ createUserPersistence }, { name, surname, 
         if (surname == "") return ({ status: '500', message: 'Provide a valid surname' });
         if (email == "") return ({ status: '500', message: 'Provide a valid email' });
         if (birthdate == "") return ({ status: '500', message: 'Provide a valid birthdate' });
-        if (role == "") return ({ status: '500', message: 'Provide a valid role' });
 
         var output = await createUserPersistence(newUser);
 

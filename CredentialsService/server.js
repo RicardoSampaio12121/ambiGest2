@@ -1,4 +1,6 @@
 'use strict';
+var mqtt = require('mqtt');
+var client = mqtt.connect("mqtt://test.mosquitto.org");
 
 const express = require('express')
 const path = require('path')
@@ -11,6 +13,9 @@ const app = express()
 app.use('/', express.static(path.join(__dirname, 'static')))
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
+
+require("./src/framework/MQTT/mqttSubscriptions");
+
 
 app.use("/api", require("./src/controllers/routes/credentialsRoutes"));
 

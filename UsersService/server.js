@@ -16,6 +16,8 @@ mongoose.connect(uri)
 
 require("./api/framework/db/mongoDB/userModel");
 
+require("./api/framework/Mqtt/mqttClient");
+
 const app = express()
 //app.use('/', express.static(path.join(__dirname,'static')))
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -25,7 +27,7 @@ app.use("/api", require('./api/controllers/routes/usersRoutes'));
 app.use('/', express.static(path.join(__dirname,'static')))
 
 
-let port = 8887
+let port = 8881
 app.listen(port, () => {
     console.log('Server at ' + port)
 })

@@ -1,6 +1,7 @@
 const { json } = require('express');
 const { UserEntity } = require('../entities/UserEntity');
-const User = require('../framework/db/mongoDB/userModel')
+const User = require('../framework/db/mongoDB/userModel');
+const { deleteUserCredsMqtt } = require('./deleteUserCredsMqtt');
 
 exports.deleteUserPersistence = async (email) => {
 
@@ -11,6 +12,8 @@ exports.deleteUserPersistence = async (email) => {
         .catch(function (error) {
             return { status: '500', error: error };
         });
+
+    deleteUserCredsMqtt(email);
 
     return { status: '200', message: 'User deleted successfully' };
 
