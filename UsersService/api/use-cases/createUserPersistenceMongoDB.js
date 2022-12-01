@@ -18,7 +18,5 @@ exports.createUserPersistence = async (user) => {
     });
 
     await newUser.save();
-        
     return {status: '200', message: 'User created successfully'};
-
 }

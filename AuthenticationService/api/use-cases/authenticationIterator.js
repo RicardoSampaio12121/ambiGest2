@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs')
 const { changePasswordEntity } = require('../entities/changePasswordEntity');
 const { loginEntity } = require('../entities/loginEntity');
 const { signupEntity } = require('../entities/signupEntity');
@@ -21,7 +22,13 @@ exports.loginIterator = async ({ loginMqtt }, { email, password }) => {
 
 exports.signupIterator = async ({ signupMqtt }, { email, password, name, surname, birthdate }) => {
     try {
-        const signup = new signupEntity(email, password, name, surname, birthdate)
+
+        const hashed = await bcrypt.hash(password, 15);
+        const signup = new signupEntity(email, hashed, name, surname, birthdate)
+
+        if(email == "") return {status: '500', error: 'Invalid email address.'}
+        if(password = "") return {status: '500', error: 'Invalid password'}
+
         var output = await signupMqtt(signup);
         return output;
     } catch (error) {

@@ -19,6 +19,7 @@ async function doAddInfoAsync(name, surname, email, birthdate){
 }
 
 
+
 client.on("message", function(topic, message){
     if(topic == 'authentication/users/addInfo'){
         console.log("Entra no topico")
