@@ -40,7 +40,6 @@ router.route('/updatePassword')
 
         try{
             await credentialsIterator.updatePassword(updatePasswordPersistence, {email, newPassword})
-
             var toReturn = ({status: '200'})
             return res.json(toReturn);
         }catch(error){
