@@ -13,7 +13,7 @@ exports.signupMqtt = async (signupEntity) => {
     client.subscribe('credentials/authentication/addUserInfoResponse/' + signupEntity.email, {qos: 0}, function(err, granted){});
 
     const creds = new credentialsEntity(signupEntity.email, signupEntity.password)
-    const info = new userInfo(signupEntity.email, signupEntity.name, signupEntity.surname, signupEntity.birthdate)
+    const info = new userInfo(signupEntity.email, signupEntity.name, signupEntity.surname, signupEntity.birthdate, signupEntity.code)
 
     client.publish('authentication/credentials/signup', JSON.stringify(creds))
     client.publish('authentication/users/addInfo', JSON.stringify(info))

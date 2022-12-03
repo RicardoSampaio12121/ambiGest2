@@ -10,7 +10,6 @@ exports.changePasswordMqtt = async (changePasswordEntity) => {
     
     client.publish('authentication/credentials/changePassword', JSON.stringify(changePasswordEntity))
     
-
     client.on('message', function (topic, message) {
         console.log("MESSAGE: " + message)
         console.log(message);

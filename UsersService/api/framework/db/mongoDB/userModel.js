@@ -7,7 +7,8 @@ const UserSchema = new Schema({
     name: { type: String, require: true },
     surname: { type: String, require: true },
     birthdate: { type: Date, require: true },
-    role: { type: String, require: true }
+    role: { type: String, require: true },
+    code: { type: String, require: true }
 },
     { collection: 'users' }
 )

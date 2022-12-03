@@ -25,7 +25,6 @@ router.route('/signup')
             const output = await authenticationIterator.signupIterator(signupMqtt, { email, password, name, surname, birthdate })
             res.json(output);
         } catch (error) {
-            console.log("Entra no error");
             throw error;
         }
     })

@@ -9,7 +9,7 @@ exports.addCredentialsPersistence = async (email, password) => {
     getClient((errClient, client) => {
          queryParams("SELECT * FROM public.credentials WHERE email = $1;", [email], (err, res) => {
              if (res.rows[0] != null) {
-                 return { status: '500', error: "This email is already in use." };
+                return { status: '500', error: "This email is already in use." };
              }
          }, client);
 

@@ -14,11 +14,12 @@ exports.createUserPersistence = async (user) => {
         name: user.name,
         surname: user.surname,
         birthdate: user.birthdate,
-        role: user.role
+        role: user.role,
+        code: user.code
     });
 
-    await newUser.save();
-        
-    return {status: '200', message: 'User created successfully'};
+    console.log("Code: " + newUser.code)
 
+    await newUser.save();
+    return {status: '200', message: 'User created successfully'};
 }

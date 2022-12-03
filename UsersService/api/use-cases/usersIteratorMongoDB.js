@@ -4,9 +4,14 @@ const { UserEntity } = require("../entities/UserEntity");
 
 require("../entities/UserEntity")
 
-exports.createUserIterator = async ({ createUserPersistence }, { name, surname, email, birthdate, role }) => {
+exports.createUserIterator = async ({ createUserPersistence }, { name, surname, email, birthdate, code }) => {
     try {
-        const newUser = new UserEntity(name, surname, email, birthdate, role);
+
+        console.log("Dentro do try: " + code)
+
+        const newUser = new UserEntity(name, surname, email, birthdate, "", code);
+
+        console.log(newUser.code)
 
         if (name == "") return ({ status: '500', message: 'Provide a valid name' });
         if (surname == "") return ({ status: '500', message: 'Provide a valid surname' });
@@ -14,7 +19,7 @@ exports.createUserIterator = async ({ createUserPersistence }, { name, surname, 
         if (birthdate == "") return ({ status: '500', message: 'Provide a valid birthdate' });
 
         var output = await createUserPersistence(newUser);
-
+        
         return output;
     } catch (error) {
         throw error;
