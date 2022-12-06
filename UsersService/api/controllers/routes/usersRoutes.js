@@ -10,10 +10,10 @@ const getSingleUserPersistence = require("../../use-cases/getSingleUserPersisten
 
 router.route('/createUser')
     .post(async (req, res) => {
-        const { name, surname, email, birthdate } = req.body;
+        const { name, surname, email, birthdate, code } = req.body;
 
         try {
-            const output = await usersIterator.createUserIterator(createUserPersistence, { name, surname, email, birthdate })
+            const output = await usersIterator.createUserIterator(createUserPersistence, { name, surname, email, birthdate, code })
             res.json(output);
         } catch (error) {
             throw error;

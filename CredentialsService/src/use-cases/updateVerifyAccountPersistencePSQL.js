@@ -5,14 +5,15 @@ exports.updateVerifyAccountPersistence = async(email, code) => {
 
         queryParams("SELECT * FROM public.credentials WHERE (email = $1 AND code = $2);", [email, code], (err, res) => {
             if(res.rows[0] == null){
+                console.log("Entra no res.rows[0] == null");
                 return ({status: '500', error: 'Wrong email or code.'});
-
             }
-        }, client);
-
-        queryParams("UPDATE public.credentials SET verified = $1 WHERE email = $2 RETURNING email;", [true, email], (err, res) => {
-            if(res.rows[0] == null){
-                return ({status: '500', error: 'It was not possible to update the status.'});
+            else{
+                queryParams("UPDATE public.credentials SET verified = $1 WHERE email = $2 RETURNING email;", [true, email], (err, res) => {
+                    if(res.rows[0] == null){
+                        return ({status: '500', error: 'It was not possible to update the status.'});
+                    }
+                }, client);
             }
         }, client);
     });

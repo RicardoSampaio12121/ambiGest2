@@ -4,8 +4,9 @@ const { getClient, query, queryParams } = require("../framework/db/Postgresql/cl
 
 
 
-exports.addCredentialsPersistence = async (email, password) => {
+exports.addCredentialsPersistence = async (email, password, code) => {
     //Check if there are credentials already created with the same email
+    
     getClient((errClient, client) => {
          queryParams("SELECT * FROM public.credentials WHERE email = $1;", [email], (err, res) => {
              if (res.rows[0] != null) {
@@ -13,7 +14,7 @@ exports.addCredentialsPersistence = async (email, password) => {
              }
          }, client);
 
-        queryParams('INSERT INTO public.credentials (email, password, verified) VALUES ($1, $2, $3);', [email, password, false], (err) => {
+        queryParams('INSERT INTO public.credentials (email, password, verified, code) VALUES ($1, $2, $3, $4);', [email, password, false, code], (err) => {
             if (err) {
                 console.log(err.message)
                 return { status: '500', error: err }

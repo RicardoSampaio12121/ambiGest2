@@ -3,13 +3,17 @@ const { changePasswordEntity } = require('../entities/changePasswordEntity');
 const { loginEntity } = require('../entities/loginEntity');
 const { signupEntity } = require('../entities/signupEntity');
 const { EmailClient } = require('../framework/EmailClient');
+const { verifyAccountEntity } = require('../entities/verifyAccountEntity');
 
 require('../entities/loginEntity')
 require('../entities/changePasswordEntity')
+require('../entities/verifyAccountEntity')
 
 exports.loginIterator = async ({ loginMqtt }, { email, password }) => {
     try {
         //Encrypt password first
+        console.log("Password: " + password)
+
 
         const login = new loginEntity(email, password);
         var output = await loginMqtt(login);
@@ -35,10 +39,10 @@ exports.signupIterator = async ({ signupMqtt }, { email, password, name, surname
         if (signup.password == "") return { status: '500', error: 'Invalid password' }
 
         var output = await signupMqtt(signup);
-        
+
         const emailClient = new EmailClient(signup.email, code);
         emailClient.sendVerificationEmail();
-        
+
         return output;
     } catch (error) {
         throw error;
@@ -49,6 +53,16 @@ exports.changePassword = async ({ changePasswordMqtt }, { email, newPassword }) 
     try {
         const changePass = new changePasswordEntity(email, newPassword)
         var output = await changePasswordMqtt(changePass);
+        return output;
+    } catch (error) {
+        throw error;
+    }
+}
+
+exports.updateAccount = async ( verifyAccountMqtt , { email, code }) => {
+    try {
+        const updateAccount = new verifyAccountEntity(email, code);
+        var output = await verifyAccountMqtt(updateAccount);
         return output;
     } catch (error) {
         throw error;

@@ -3,7 +3,7 @@ var mqtt = require('mqtt')
 var client = mqtt.connect("mqtt://test.mosquitto.org");
 
 exports.loginMqtt = async (loginEntity) => {
-    client.subscribe('credentials/authentication/loginResponse', { qos: 0 }, function (err, granted) {
+    client.subscribe('credentials/authentication/loginResponse/' + loginEntity.email, { qos: 0 }, function (err, granted) {
         console.log("Subscribed to credentials/authentication/loginResponse");
     });
     
@@ -12,7 +12,7 @@ exports.loginMqtt = async (loginEntity) => {
     client.on('message', function (topic, message) {
         console.log("MESSAGE: " + message)
 
-        client.unsubscribe('credentials/authentication/loginResponse');
+        //client.unsubscribe('credentials/authentication/loginResponse/' + loginEntity.email);
         return message;
     });
 }

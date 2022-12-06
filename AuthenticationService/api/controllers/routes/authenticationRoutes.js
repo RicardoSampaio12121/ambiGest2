@@ -4,6 +4,7 @@ const authenticationIterator = require("../../use-cases/authenticationIterator")
 const loginMqtt = require("../../use-cases/loginMqtt");
 const signupMqtt = require("../../use-cases/signupMqtt");
 const changePasswordMqtt = require("../../use-cases/changePasswordMqtt")
+const verifyAccount = require("../../use-cases/verifyAccountMqtt")
 
 router.route('/login')
     .post(async (req, res) => {
@@ -34,6 +35,18 @@ router.route('/changePassword')
         const {email, newPassword } = req.body
         try{
             const output = await authenticationIterator.changePassword(changePasswordMqtt, {email, newPassword})
+            res.json(output);
+        }catch(error) {
+            throw error;
+        }
+    })
+
+router.route('/verifyAccount')
+    .put(async (req, res) => {
+        const {email, code} = req.body;
+
+        try{
+            const output = await authenticationIterator.updateAccount(verifyAccount.verifyAccountMqtt, {email, code})
             res.json(output);
         }catch(error) {
             throw error;

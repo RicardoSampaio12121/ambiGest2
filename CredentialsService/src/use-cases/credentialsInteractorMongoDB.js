@@ -4,9 +4,11 @@ const { CredentialsEntity } = require("../entities/CredentialsEntity");
 
 exports.checkCredentialsInteractor = async ({ checkCredentialsPersistence }, { email, password }) => {
     try {
-        const creds = new CredentialsEntity({
-            email, password
-        });
+
+        console.log("Email:: " + email)
+        console.log("Password:: " + password)
+
+        const creds = new CredentialsEntity(email, password, false);
         const output = await checkCredentialsPersistence(email, password);
 
         return output;
@@ -17,9 +19,9 @@ exports.checkCredentialsInteractor = async ({ checkCredentialsPersistence }, { e
     }
 };
 
-exports.addCredentialsIterator = async ({ addCredentialsPersistence }, { email, password }) => {
+exports.addCredentialsIterator = async ({ addCredentialsPersistence }, { email, password, code }) => {
     try {
-        const output = await addCredentialsPersistence(email, password);
+        const output = await addCredentialsPersistence(email, password, code);
         return output;
     }
     catch (error) {
@@ -36,7 +38,7 @@ exports.updatePassword = async ({ updatePasswordPersistence }, { email, newPassw
     }
 }
 
-exports.updateVerifyAccount = async ({ updateVerifyAccountPersistence }, { email, code }) => {
+exports.updateVerifyAccount = async ( updateVerifyAccountPersistence , { email, code }) => {
     try {
         const output = await updateVerifyAccountPersistence(email, code);
         return output;
