@@ -32,13 +32,23 @@ client.subscribe('users/credentials/deleteUserCreds', { qos: 0 }, function (err,
     console.log("Subscribed to users/credentials/deleteUserCreds")
 })
 
-async function doWorkAsync(email, password) {
-    var creds = await iterator.checkCredentialsInteractor(checkCredentialsIteratorMongo, {email, password})
+// async function doWorkAsync(email, password) {
+//     var creds = await iterator.checkCredentialsInteractor(checkCredentialsIteratorMongo, {email, password});
 
-    client.publish(
-        'credentials/authentication/loginResponse/' + email,
-        JSON.stringify(creds));
+
+//     // await console.log(creds);  
+
+//     // await client.publish(
+//     //     'credentials/authentication/loginResponse/' + email,
+//     //     JSON.stringify(creds));
+// }
+
+const asyncExample = async (email, password) => {
+    const result = await iterator.checkCredentialsInteractor(checkCredentialsIteratorMongo, { email, password });
+    return result;
 }
+
+
 
 async function doVerifyCodeWorkAsync(email, code) {
     var output = await iterator.updateVerifyAccount(verifyCodeIteratorPersistence.updateVerifyAccountPersistence, { email, code })
@@ -70,7 +80,13 @@ client.on('message', function (topic, message) {
     switch (topic) {
         case 'authentication/credentials/login': //Login
             var msgObject = JSON.parse(message)
-            doWorkAsync(msgObject.email, msgObject.password);
+                //doWorkAsync(msgObject.email, msgObject.password);
+                ; (async () => {
+                    const creds = await asyncExample('a17441@alunos.ipca.pt', 'olamundo')
+                    console.log("Creds: " + creds)
+
+                    client.publish('credentials/authentication/loginResponse/' + 'a17441@alunos.ipca.pt', JSON.stringify(creds));
+                })()
             break;
 
         case 'authentication/credentials/verifyCode':

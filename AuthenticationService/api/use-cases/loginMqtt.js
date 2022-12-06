@@ -12,7 +12,7 @@ exports.loginMqtt = async (loginEntity) => {
     client.on('message', function (topic, message) {
         console.log("MESSAGE: " + message)
 
-        //client.unsubscribe('credentials/authentication/loginResponse/' + loginEntity.email);
+        client.unsubscribe('credentials/authentication/loginResponse/' + loginEntity.email);
         return message;
     });
 }

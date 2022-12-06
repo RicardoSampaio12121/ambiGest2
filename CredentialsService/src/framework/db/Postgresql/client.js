@@ -20,7 +20,7 @@ module.exports = {
         });
       },
 
-      getClient: (callback) => {
+       getClient: (callback) => {
         // const start = Date.now();
       
         const client = new Client(configDB);

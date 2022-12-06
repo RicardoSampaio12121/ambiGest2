@@ -51,7 +51,8 @@ exports.signupIterator = async ({ signupMqtt }, { email, password, name, surname
 
 exports.changePassword = async ({ changePasswordMqtt }, { email, newPassword }) => {
     try {
-        const changePass = new changePasswordEntity(email, newPassword)
+        const hashed = await bcrypt.hash(newPassword, 15);
+        const changePass = new changePasswordEntity(email, hashed)
         var output = await changePasswordMqtt(changePass);
         return output;
     } catch (error) {

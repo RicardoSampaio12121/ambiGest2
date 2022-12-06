@@ -47,7 +47,6 @@ router.route('/updateEmail')
 router.route('/deleteUser')
     .delete(async (req, res) => {
         const {email} = req.body;
-
         try{
             const output = await usersIterator.deleteUserIterator(deleteUserPersistence, {email})
             res.json(output);

@@ -11,6 +11,9 @@ exports.checkCredentialsInteractor = async ({ checkCredentialsPersistence }, { e
         const creds = new CredentialsEntity(email, password, false);
         const output = await checkCredentialsPersistence(email, password);
 
+        console.log("CREDENTIALS: " + creds);
+        console.log("Output: " + output.data);
+
         return output;
 
     } catch (error) {

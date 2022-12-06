@@ -1,6 +1,7 @@
 "use strict"
 
 const { UserEntity } = require("../entities/UserEntity");
+const { jwt } = require('jsonwebtoken');
 
 require("../entities/UserEntity")
 
@@ -67,7 +68,7 @@ exports.getAllUsersIterator = async ({ getAllUsersPersistence }) => {
     }
 }
 
-exports.getSingleUserIterator = async ({ getSingleUserPersistence }, { email }) => {
+exports.getSingleUserIterator = async ({ getSingleUserPersistence }, { email, token }) => {
     try {
         var output = await getSingleUserPersistence(email);
         return output;
