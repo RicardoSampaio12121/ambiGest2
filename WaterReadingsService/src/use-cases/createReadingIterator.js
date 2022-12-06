@@ -13,7 +13,6 @@ exports.createReadingPersistence = async (reading) => {
         amount: reading.amount
     });
 
-    console.log("Antes do if")
     if (userReading && userReading.amount <= newReading.amount || userReading.email == null) {
         newReading.save();
         return { status: '200', message: 'User created successfully.' };
