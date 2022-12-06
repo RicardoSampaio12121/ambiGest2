@@ -45,6 +45,8 @@ router.route('/getReadings/:email')
 
             jwt.verify(token, 'Olamundo', function (err, decoded) {
                 if (err) res.json({ status: '500', message: 'Token has expired' })
+
+                if(decoded.UserInfo.email != email) res.json({status: '403', message: "This is not your email"})
             })
 
             const output = await readingIterator.getReadingsIterator(getReadingsPersistence, { email });
@@ -69,14 +71,15 @@ router.route('/getAll')
 
             jwt.verify(token, 'Olamundo', function (err, decoded) {
                 if (err) res.json({ status: '500', message: err })
+                if(decoded.UserInfo.role != "admin") res.json({status: '403', message: "You do not have permission to access this endpoint."});
             });
 
-            const output = await readingIterator.getAllReadingsIterator(getAllReadingsPersistence, {email})
+            const output = await readingIterator.getAllReadingsIterator(getAllReadingsPersistence)
             console.log(output.message);
             res.json(output);
 
         } catch (error) {
-
+            throw error;
         }
     })
 module.exports = router

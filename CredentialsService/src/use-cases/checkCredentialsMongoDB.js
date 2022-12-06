@@ -1,4 +1,4 @@
-const {configDB} = require("../framework/db/Postgresql/config")
+const { configDB } = require("../framework/db/Postgresql/config")
 const jwt = require('jsonwebtoken');
 const { Client } = require('pg')
 const client = new Client(configDB)
@@ -10,8 +10,10 @@ exports.checkCredentialsPersistence = async (email, password) => {
 
     const res = await client.query('SELECT * FROM public.credentials WHERE email = $1;', [email])
 
+    console.log(res.rows[0].email)
+    console.log(res.rows[0].verified)
+
     if (res.rows[0].verified == false) {
-        console.log("Entra no else")
         return { status: '500', error: 'User not verified' }
     }
     else {
@@ -19,7 +21,10 @@ exports.checkCredentialsPersistence = async (email, password) => {
         if (comparison) {
             try {
                 const token = jwt.sign({
-                    email: email
+                    "UserInfo" : {
+                        "email": email,
+                        "role": res.rows[0].role
+                    }
                 },
                     JWT_SECRET,
                     {

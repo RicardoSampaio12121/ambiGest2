@@ -23,6 +23,7 @@ exports.getReadingsIterator = async (getReadingsPersistence, {email}) => {
 }
 
 exports.getAllReadingsIterator = async (getAllReadingsPersistence) => {
+    
     try{
         var output = await getAllReadingsPersistence()
         return output;
