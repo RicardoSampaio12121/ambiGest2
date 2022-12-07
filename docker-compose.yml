@@ -1,0 +1,96 @@
+version: '3.9'
+
+services:
+  postgres:
+    container_name: postgres-creds
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 2862
+      POSTGRES_DB: CredentialsDB
+    volumes:
+      - ./data:/data/postgres
+    ports:
+      - "5432:5432"
+
+  credentials_api:
+    build: ./CredentialsService
+    ports:
+      - 4002:3002
+    volumes:
+      - .:/usr/src/app/creds
+    depends_on:
+      - postgres
+
+  mongo_users_db:
+    container_name: db_container_users
+    image: mongo:latest
+    restart: always
+    ports:
+      - 2719:27017
+    volumes:
+      - mongo_users_db:/data/db
+
+  users_api:
+    build: ./UsersService
+    ports:
+      - 4004:3004
+    volumes:
+      - .:/usr/src/app/users
+    environment:
+      ATLAS_URI: mongodb://mongo_users_db:27017
+    depends_on:
+      - mongo_users_db
+  
+  authentication_api:
+    build: ./AuthenticationService
+    ports: 
+      - 4003:3003
+    volumes:
+      - .:/usr/src/app /auth
+
+  mongo_garbage_db:
+    container_name: db_garbage_container
+    image: mongo:latest
+    restart: always
+    ports:
+      - 2717:27017
+    volumes:
+      - mongo_garbage_db:/data/db
+
+  garbage_api:
+    build: ./GarbageCollectionService
+    ports:
+      - 4000:3000
+    volumes:
+      - .:/usr/src/app/garbage
+    environment:
+      ATLAS_URI: mongodb://mongo_garbage_db:27017
+    depends_on:
+      - mongo_garbage_db
+  
+  mongo_db_water_readings:
+    container_name: db_water_readings_container
+    image: mongo:latest
+    restart: always
+    ports:
+      - 2718:27017
+    volumes:
+      - mongo_db_water_readings:/data/db
+
+  water_readings_api:
+    build: ./WaterReadingsService
+    ports:
+      - 4001:3001
+    volumes:
+      - .:/usr/src/app/readings
+    environment:
+      ATLAS_URI: mongodb://mongo_db_water_readings:27017
+    depends_on:
+      - mongo_db_water_readings
+
+volumes: 
+  mongo_users_db: {}
+  mongo_garbage_db: {}
+  mongo_db_water_readings: {}

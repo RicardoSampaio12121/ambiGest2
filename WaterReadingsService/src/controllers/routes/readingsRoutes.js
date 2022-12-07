@@ -54,7 +54,6 @@ router.route('/getReadings/:email')
             console.log(output.message);
 
             res.json(output);
-
         } catch (error) {
             throw error;
         }

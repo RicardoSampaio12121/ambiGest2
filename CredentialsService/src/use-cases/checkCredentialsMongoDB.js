@@ -10,8 +10,7 @@ exports.checkCredentialsPersistence = async (email, password) => {
 
     const res = await client.query('SELECT * FROM public.credentials WHERE email = $1;', [email])
 
-    console.log(res.rows[0].email)
-    console.log(res.rows[0].verified)
+    if(res.rowCount == 0) return {status: '500', message: 'There are no records in the database.'}
 
     if (res.rows[0].verified == false) {
         return { status: '500', error: 'User not verified' }

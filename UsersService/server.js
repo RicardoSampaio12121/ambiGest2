@@ -27,7 +27,7 @@ app.use("/api", require('./api/controllers/routes/usersRoutes'));
 app.use('/', express.static(path.join(__dirname,'static')))
 
 
-let port = 8881
+let port = 3004
 app.listen(port, () => {
     console.log('Server at ' + port)
 })

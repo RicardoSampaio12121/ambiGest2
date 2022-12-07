@@ -1,0 +1,28 @@
+version: '3.9'
+
+services: 
+  # postgresql services
+  postgres:
+    container_name: postgres-creds 
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 2862
+      POSTGRES_DB: CredentialsDB
+    volumes: 
+      - ./data:/data/postgres
+    ports:
+      - "5432:5432"
+    
+  
+  # Node API service
+  api:
+    build: .
+    ports:
+      - 4002:3002
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - postgres
+

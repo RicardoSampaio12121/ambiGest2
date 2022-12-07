@@ -1,0 +1,27 @@
+version: '3.9'
+
+services: 
+  # MongoDB services
+  mongo_users_db: 
+    container_name: db_container_users
+    image: mongo:latest
+    restart: always
+    ports:
+      - 2719:27017
+    volumes: 
+      - mongo_users_db:/data/db
+  
+  # Node API service
+  api:
+    build: .
+    ports:
+      - 4004:3004
+    volumes:
+      - .:/usr/src/app
+    environment:
+      ATLAS_URI: mongodb://mongo_users_db:27017
+    depends_on:
+      - mongo_users_db
+
+volumes: 
+  mongo_users_db: {}

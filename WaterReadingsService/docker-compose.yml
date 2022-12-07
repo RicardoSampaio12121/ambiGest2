@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  mongo_db_water_readings:
+    container_name: db_water_readings_container
+    image: mongo:latest
+    restart: always
+    ports:
+      - 2718:27017
+    volumes:
+      - mongo_db_water_readings:/data/db
+
+  api:
+    build: .
+    ports:
+      - 4001:3001
+    volumes:
+      - .:/usr/src/app
+    environment:
+      ATLAS_URI: mongodb://mongo_db_water_readings:27017
+    depends_on:
+      - mongo_db_water_readings
+
+volumes:
+  mongo_db_water_readings: {}

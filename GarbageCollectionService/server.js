@@ -12,7 +12,7 @@ mongoose.connect(uri)
     .then(() => console.log("Connected to mongo"))
     .catch(err => console.error("It was not possible to connect to mongo: ", err))
 
-require('./src/framework/db/mongo/GBModel')
+require('./src/framework/DB/Mongo/GBModel')
 
 const app = express()
 //app.use('/', express.static(path.join(__dirname,'static')))
@@ -23,7 +23,7 @@ app.use('/api', require('./src/controllers/routes/garbageCollectionRoutes'))
 app.use('/', express.static(path.join(__dirname,'static')))
 
 
-let port = 8883
+let port = 3000
 app.listen(port, () => {
     console.log('Server at ' + port)
 })

@@ -21,6 +21,9 @@ exports.checkCredentialsInteractor = async ({ checkCredentialsPersistence }, { e
 
 exports.addCredentialsIterator = async ({ addCredentialsPersistence }, { email, password, code }) => {
     try {
+
+        if(code == null) code = "qwerty"
+
         const output = await addCredentialsPersistence(email, password, code);
         return output;
     }

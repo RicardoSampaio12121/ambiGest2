@@ -12,7 +12,7 @@ app.use(bodyParser.json())
 
 app.use("/api", require('./api/controllers/routes/authenticationRoutes'));
 
-let port = 8885
+let port = 3003
 app.listen(port, () => {
     console.log('Server at ' + port)
 })
