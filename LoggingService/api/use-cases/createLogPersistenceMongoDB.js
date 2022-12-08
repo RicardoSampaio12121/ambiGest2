@@ -28,6 +28,9 @@ exports.createLogPersistence = async (log) => {
     message: log.message,
   });
 
+  console.log("Message: " + newLog.message);
+  console.log("Type: " + newLog.type);
+
   await newLog.save();
 
   return { status: "200", message: "Log Added" };

@@ -90,7 +90,29 @@ services:
     depends_on:
       - mongo_db_water_readings
 
+  mongo_db_logs:
+    container_name: db_logs_container
+    image: mongo:latest
+    restart: always
+    ports:
+      - 2716:27017
+    volumes:
+      - mongo_db_logs:/data/db
+
+  logs_api:
+    build: ./LoggingService
+    ports:
+      - 4005:3005
+    volumes:
+      - .:/usr/src/app/loggings
+    environment:
+      ATLAS_URI: mongodb://mongo_db_logs:27017/logs
+    depends_on:
+      - mongo_db_logs
+
+
 volumes: 
   mongo_users_db: {}
   mongo_garbage_db: {}
   mongo_db_water_readings: {}
+  mongo_db_logs: {}

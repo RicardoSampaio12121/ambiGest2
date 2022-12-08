@@ -19,7 +19,7 @@ mongoose
   );
 
 // require("./api/framework/db/mongoDB/logModel");
-// require("./api/framework/Mqtt/mqttClient");
+require("./api/framework/Mqtt/mqttClient");
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 app.use("/api", require("./api/controllers/routes/logRoutes"));
 app.use("/", express.static(path.join(__dirname, "static")));
 
-let port = 8889;
+let port = 3005;
 app.listen(port, () => {
   console.log("Server at " + port);
 });

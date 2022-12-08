@@ -1,47 +1,28 @@
 var mqtt = require("mqtt");
 var client = mqtt.connect("mqtt://test.mosquitto.org");
 
-const createUser = require("../../use-cases/createLogPersistenceMongoDB");
+const createLogPersistence = require("../../use-cases/createLogPersistenceMongoDB");
 const iterator = require("../../use-cases/logIteratorMongoDB");
 
 client.subscribe(
-  "authentication/users/addInfo",
+  "logs/addLog",
   { qos: 0 },
   function (err, granted) {
-    console.log("Subscried to topic: 'authentication/users/addInfo'");
+    console.log("Subscried to topic: 'logs/addLog'");
   }
 );
 
-async function doAddInfoAsync(name, surname, email, birthdate) {
-  const role = "";
-  const a = await iterator.createLogIterator(createUser, {
-    name,
-    surname,
-    email,
-    birthdate,
-    role,
-  });
+async function doAddLogAsync(message, type) {
 
+  const a = await iterator.createLogIterator(createLogPersistence, { type, message });
   console.log(a);
-
-  client.publish(
-    "credentials/authentication/addUserInfoResponse/" + email,
-    JSON.stringify(a)
-  );
-  return a;
 }
 
 client.on("message", function (topic, message) {
-  if (topic == "authentication/users/addInfo") {
-    console.log("Entra no topico");
-    var msgObject = JSON.parse(message);
+  console.log("Entra no topico");
+  var msgObject = JSON.parse(message);
 
-    console.log(msgObject);
-    const a = doAddInfoAsync(
-      msgObject.name,
-      msgObject.surname,
-      msgObject.email,
-      msgObject.birthdate
-    );
-  }
-});
+  console.log(msgObject);
+  const a = doAddLogAsync(msgObject.message, msgObject.type);
+}
+);
