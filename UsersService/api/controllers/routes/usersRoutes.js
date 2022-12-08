@@ -9,6 +9,25 @@ const deleteUserPersistence = require("../../use-cases/deleteUserPersistenceMong
 const getAllUsersPersistence = require("../../use-cases/getAllUsersPersistenceMongoDB");
 const getSingleUserPersistence = require("../../use-cases/getSingleUserPersistenceMongoDB");
 
+/**
+ * @api {post} /api/createUser/ Create a new user
+ * @apiName User Service
+ * @apiGroup Users
+ *
+ * @apiParam {String} name Primeiro Nome
+ * @apiParam {String} surname Ultimo nome
+ * @apiParam {String} email Email
+ * @apiParam {String} birthdate Data de Nascimento
+ * @apiParam {String} code Nivel
+ * 
+ *
+ * @apiSuccessExample {Json} Sucesso
+ *  HTTP/1.1 200 ok 
+ * {
+    "status": "200",
+    "Description": "User criado"
+ * }
+ */
 router.route('/createUser')
     .post(async (req, res) => {
         const { name, surname, email, birthdate, code } = req.body;
@@ -21,6 +40,24 @@ router.route('/createUser')
         }
     })
 
+/**
+ * @api {put} /api/updateUser/ Edit a new user
+ * @apiName User Service
+ * @apiGroup Users
+ *
+ * @apiParam {String} name Primeiro Nome
+ * @apiParam {String} surname Ultimo nome
+ * @apiParam {String} email Email
+ * @apiParam {String} birthdate Data de Nascimento
+ * 
+ *
+ * @apiSuccessExample {Json} Sucesso
+ *  HTTP/1.1 200 ok 
+ * {
+    "status": "200",
+    "Description": "User alterado"
+ * }
+ */
 router.route('/updateUser')
     .put(async (req, res) => {
         const { name, surname, email, birthdate } = req.body;
@@ -33,6 +70,22 @@ router.route('/updateUser')
         }
     })
 
+/**
+* @api {put} /api/updateEmail/ Change user email
+* @apiName User Service
+* @apiGroup Users
+*
+* @apiParam {String} currentEmail Email atual
+* @apiParam {String} newEmail Novo Email
+* 
+*
+* @apiSuccessExample {Json} Sucesso
+*  HTTP/1.1 200 ok 
+* {
+"status": "200",
+"Description": "Email alterado"
+* }
+*/
 router.route('/updateEmail')
     .put(async (req, res) => {
         const { currentEmail, newEmail } = req.body;
@@ -45,6 +98,22 @@ router.route('/updateEmail')
         }
     })
 
+
+/**
+* @api {delete} /api/deleteUser/ Delete user 
+* @apiName User Service
+* @apiGroup Users
+*
+* @apiParam {String} email Email
+* 
+*
+* @apiSuccessExample {Json} Sucesso
+*  HTTP/1.1 200 ok 
+* {
+"status": "200",
+"Description": "User deleted"
+* }
+*/
 router.route('/deleteUser')
     .delete(async (req, res) => {
         const { email } = req.body;
@@ -75,6 +144,22 @@ router.route('/deleteUser')
         }
     })
 
+
+/**
+* @api {get} /api/getUser/:email Search User
+* @apiName User Service
+* @apiGroup Users
+*
+* @apiParam {String} email Email
+* 
+*
+* @apiSuccessExample {Json} Sucesso
+*  HTTP/1.1 200 ok 
+* {
+"status": "200",
+"Description": "Users retrieved"
+* }
+*/
 router.route('/getUser/:email')
     .get(async (req, res) => {
         var email = req.params.email
@@ -107,6 +192,20 @@ router.route('/getUser/:email')
         }
     })
 
+/**
+* @api {post} /api/getAll/ Get All Users
+* @apiName User Service
+* @apiGroup Users
+*
+* 
+*
+* @apiSuccessExample {Json} Sucesso
+*  HTTP/1.1 200 ok 
+* {
+"status": "200",
+"Description": "All Users retrieved"
+* }
+*/
 router.route('/getAll')
     .get(async (req, res) => {
         try {

@@ -3,6 +3,8 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
+const swaggerUI = require("swagger-ui-express");
+const swaggerDocument = require("./api/static/swagger/swagger.json");
 
 
 require('dotenv').config();
@@ -25,6 +27,8 @@ app.use(bodyParser.json())
 
 app.use("/api", require('./api/controllers/routes/usersRoutes'));
 app.use('/', express.static(path.join(__dirname,'static')))
+app.use("/apidoc", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+app.use("/apidocjs", express.static("./api/static/apidoc"));
 
 
 let port = 3004

@@ -1,4 +1,5 @@
 const { configDB } = require("../framework/db/Postgresql/config")
+const https = require('https');
 const jwt = require('jsonwebtoken');
 const { Client } = require('pg')
 const client = new Client(configDB)
@@ -37,7 +38,6 @@ exports.checkCredentialsPersistence = async (email, password) => {
                 var loginLog = {type: "login", message: "Login successfull"}
 
                 mqttClient.publish('logs/addLog', JSON.stringify(loginLog) )
-                                  //logs/addLog
 
                 return { status: '200', message: token }
 

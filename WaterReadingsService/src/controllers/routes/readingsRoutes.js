@@ -33,8 +33,6 @@ router.route('/getReadings/:email')
     .get(async (req, res) => {
         const email = req.params.email
 
-        console.log(email)
-
         try {
             if (!req.headers.authorization) {
                 res.json({ status: '500', message: 'No token provided' })

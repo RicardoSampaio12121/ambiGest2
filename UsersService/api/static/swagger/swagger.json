@@ -1,0 +1,188 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Users Service",
+        "version": "1.0.0",
+        "description": ""
+    },
+    "paths": {
+        "/api/createUser/": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User_Service"
+                        }
+                    }
+                ]
+            }
+        },
+        "/api/updateUser/": {
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User_Service"
+                        }
+                    }
+                ]
+            }
+        },
+        "/api/updateEmail/": {
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User_Service"
+                        }
+                    }
+                ]
+            }
+        },
+        "/api/deleteUser/": {
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "Email"
+                    }
+                ]
+            }
+        },
+        "/api/getUser/{email}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "Email"
+                    }
+                ]
+            }
+        },
+        "/api/getAll/": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/null"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "User_Service": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Primeiro Nome"
+                },
+                "surname": {
+                    "type": "string",
+                    "description": "Ultimo nome"
+                },
+                "email": {
+                    "type": "string",
+                    "description": "Email"
+                },
+                "birthdate": {
+                    "type": "string",
+                    "description": "Data de Nascimento"
+                },
+                "code": {
+                    "type": "string",
+                    "description": "Nivel"
+                },
+                "currentEmail": {
+                    "type": "string",
+                    "description": "Email atual"
+                },
+                "newEmail": {
+                    "type": "string",
+                    "description": "Novo Email"
+                }
+            },
+            "required": [
+                "name",
+                "surname",
+                "email",
+                "birthdate",
+                "code",
+                "currentEmail",
+                "newEmail"
+            ]
+        }
+    }
+}

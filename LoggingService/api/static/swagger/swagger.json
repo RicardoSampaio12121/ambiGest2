@@ -1,0 +1,129 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Logging Service",
+        "version": "1.0.0",
+        "description": ""
+    },
+    "paths": {
+        "/api/addlog/": {
+            "post": {
+                "tags": [
+                    "Logs"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Log_Service"
+                        }
+                    }
+                ]
+            }
+        },
+        "/api/getLog/{query}/": {
+            "get": {
+                "tags": [
+                    "Logs"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "Log"
+                    }
+                ]
+            }
+        },
+        "/api/getLogType/{type}/": {
+            "get": {
+                "tags": [
+                    "Logs"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "Tipo"
+                    }
+                ]
+            }
+        },
+        "/api/getLogType/": {
+            "get": {
+                "tags": [
+                    "Logs"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "Log"
+                    },
+                    {
+                        "name": "type",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "Tipo"
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "Log_Service": {
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "description": "Log"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "Tipo"
+                },
+                "query": {
+                    "type": "string",
+                    "description": "Log"
+                }
+            },
+            "required": [
+                "message",
+                "type",
+                "query"
+            ]
+        }
+    }
+}
