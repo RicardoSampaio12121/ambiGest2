@@ -30,10 +30,10 @@ exports.checkCredentialsPersistence = async (email, password) => {
                         expiresIn: 86400
                     }
                 )
-                return { status: '200', data: token }
+                return { status: '200', message: token }
 
             } catch (error) {
-                return { status: '500', error: error }
+                return { status: '500', message: error }
             }
         }
     }

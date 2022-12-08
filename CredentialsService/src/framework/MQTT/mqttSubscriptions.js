@@ -32,17 +32,6 @@ client.subscribe('users/credentials/deleteUserCreds', { qos: 0 }, function (err,
     console.log("Subscribed to users/credentials/deleteUserCreds")
 })
 
-// async function doWorkAsync(email, password) {
-//     var creds = await iterator.checkCredentialsInteractor(checkCredentialsIteratorMongo, {email, password});
-
-
-//     // await console.log(creds);  
-
-//     // await client.publish(
-//     //     'credentials/authentication/loginResponse/' + email,
-//     //     JSON.stringify(creds));
-// }
-
 const asyncExample = async (email, password) => {
     const result = await iterator.checkCredentialsInteractor(checkCredentialsIteratorMongo, { email, password });
     return result;
@@ -82,10 +71,10 @@ client.on('message', function (topic, message) {
             var msgObject = JSON.parse(message)
                 //doWorkAsync(msgObject.email, msgObject.password);
                 ; (async () => {
-                    const creds = await asyncExample('a17441@alunos.ipca.pt', 'olamundo')
+                    const creds = await asyncExample(msgObject.email, msgObject.password)
                     console.log("Creds: " + creds)
 
-                    client.publish('credentials/authentication/loginResponse/' + 'a17441@alunos.ipca.pt', JSON.stringify(creds));
+                    client.publish('credentials/authentication/loginResponse/' + msgObject.email, JSON.stringify(creds));
                 })()
             break;
 

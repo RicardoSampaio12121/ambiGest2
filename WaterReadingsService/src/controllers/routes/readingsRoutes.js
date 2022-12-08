@@ -17,7 +17,6 @@ router.route('/addReading')
 
         const token = req.headers.authorization.split(" ")[1]
 
-        //TODO: Check expiration time
         jwt.verify(token, 'Olamundo', function (err, decoded) {
             if (err) res.json({ status: '500', message: 'Token has expired' })
         })

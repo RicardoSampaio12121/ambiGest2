@@ -6,6 +6,7 @@ const addCredentialsPersistence = require("../../use-cases/addCredentialsPersist
 const updatePasswordPersistence = require("../../use-cases/updatePasswordPersistencePSQL");
 const deleteCredentialsPersistence = require("../../use-cases/deleteCredentialsPersistencePSQL");
 const updateVerifyAccountPersistence = require("../../use-cases/updateVerifyAccountPersistencePSQL");
+const getAllCredentialsPersistence = require("../../use-cases/getAllCredentialsPersistencePSQL")
 
 router.route('/checkCreds')
     .post(async (req, res) => {
@@ -15,7 +16,6 @@ router.route('/checkCreds')
             res.json(creds);
         }catch(error){
             throw error;
-            //return res.status(500).send('Internal server error');
         }
     })
 
@@ -67,6 +67,16 @@ router.route('/updateVerifyAccount')
 
         try{
             var response = await credentialsIterator.updateVerifyAccount( updateVerifyAccountPersistence, {email, code} )
+            return res.json(response);
+        }catch(error){
+            throw error;
+        }
+    })
+
+router.route('/getAll')
+    .get(async (req, res) => {
+        try{
+            var response = await credentialsIterator.getAllCredentials(getAllCredentialsPersistence)
             return res.json(response);
         }catch(error){
             throw error;
